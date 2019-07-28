@@ -44,12 +44,12 @@ class App extends PureComponent {
   }
 
   render() {
-    const { expressionFactors: expression, result } = this.state;
+    const { expressionFactors, result } = this.state;
 
     return (
       <div className='App'>
         <div className='App__display'>
-          <p className='App__display__expression'>{expression}</p>
+          <p className='App__display__expression'>{expressionFactors.join(' ')}</p>
           <p className='App__display__result'>{result}</p>
         </div>
         <ButtonPanel onClick={this.onClick}/>
