@@ -17,11 +17,11 @@ class App extends PureComponent {
 
   componentDidMount() {
     document.addEventListener('keydown', ({ key }) => {
-      if (BUTTONS.includes(key)) return this.onClick(key);
+      if (BUTTONS.includes(key)) return this.handleInput(key);
     });
   }
 
-  onClick = (char) => {
+  handleInput = (char) => {
     switch (char) {
       case 'Backspace': {
         const expressionFactors = getAllButLast(this.state.expressionFactors);
@@ -73,7 +73,7 @@ class App extends PureComponent {
           <p className='App__display__expression'>{expressionFactors.join(' ')}</p>
           <p className='App__display__result'>{result}</p>
         </div>
-        <ButtonPanel onClick={this.onClick}/>
+        <ButtonPanel onClick={this.handleInput}/>
       </div>
     );
   }
