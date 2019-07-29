@@ -9,6 +9,6 @@ export const BUTTONS_LAYOUT = {
   SIDE: ['÷', '*', '-', '+', '='],
 };
 
-export const KEYBOARD_BUTTONS = ['Backspace', 'Enter'];
+export const KEYBOARD_BUTTONS = ['Backspace', 'Enter', 'Slash'];
 
 export const SEPARATORS = ['+', '-', '*', '÷'];

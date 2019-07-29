@@ -32,6 +32,8 @@ class App extends PureComponent {
       case 'Enter':
       case '=':
         return this.updateDisplay([this.state.result], null);
+      case 'Slash': // alias
+        return this.onChar('÷');
       default:
         const expressionFactors = this.getNewExpression(char);
         this.updateDisplay(expressionFactors);
