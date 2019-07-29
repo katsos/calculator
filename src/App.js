@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import last from 'lodash/last';
 import ButtonPanel from './components/ButtonPanel';
+import calculateExpression from './logic/calculate';
 import './App.scss';
 
 const INITIAL_STATE = {
@@ -24,7 +25,6 @@ class App extends PureComponent {
     }
   }
 
-
   getNewExpression(char) {
     const { expressionFactors } = this.state;
     const isNewCharSeparator = SEPARATORS.includes(char);
@@ -40,10 +40,8 @@ class App extends PureComponent {
   }
 
   updateResult() {
-    const { expressionFactors: expression } = this.state;
-    const isLastFactorNumber = last(expression).match(/\d+/);
-    if (!isLastFactorNumber) return;
-    this.setState({ result: eval(expression.join('')) });
+    const { expressionFactors } = this.state;
+    this.setState({ result: calculateExpression(expressionFactors) });
   }
 
   render() {
