@@ -19,21 +19,24 @@ class App extends PureComponent {
       case '=':
         return this.setState({ expressionFactors: [this.state.result], result: null });
       default:
-        this.updateExpression(char, this.updateResult);
+        const expressionFactors = this.getNewExpression(char);
+        this.setState({ expressionFactors }, this.updateResult);
     }
   }
 
-  updateExpression(char, cb) {
+
+  getNewExpression(char) {
     const { expressionFactors } = this.state;
     const isNewCharSeparator = SEPARATORS.includes(char);
     const lastFactor = last(expressionFactors);
     const isLastFactorSeparator = SEPARATORS.includes(lastFactor);
 
-    const newExpressionFactors = isNewCharSeparator ?
-      isLastFactorSeparator ? [...expressionFactors.slice(0, -1), char] // replace last separator
-      : [...expressionFactors, char] // add new separator
-      : [...expressionFactors.slice(0, -1), (lastFactor || '') + char]; // add or update number
-    this.setState({ expressionFactors: newExpressionFactors }, cb);
+    if (isNewCharSeparator) {
+      if (isLastFactorSeparator) return [...expressionFactors.slice(0, -1), char]; // replace last separator
+      return [...expressionFactors, char]; // add new separator
+    }
+    if (isLastFactorSeparator) return [...expressionFactors, char]; // add new number
+    return [...expressionFactors.slice(0, -1), (lastFactor || '') + char]; // update last number
   }
 
   updateResult() {
