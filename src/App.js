@@ -1,22 +1,35 @@
 import React, { PureComponent } from 'react';
-import last from 'lodash/last';
 import ButtonPanel from './components/ButtonPanel';
 import calculateExpression from './logic/calculate';
+import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from './buttons';
+import { getLast, getAllButLast } from './helpers';
 import './App.scss';
 
 const INITIAL_STATE = {
   expressionFactors: [],
   result: null,
 };
-const SEPARATORS = ['÷', '*', '-', '+'];
+
+const BUTTONS = [KEYBOARD_BUTTONS, Object.values(BUTTONS_LAYOUT).flat()].flat();
 
 class App extends PureComponent {
-  state = {...INITIAL_STATE}
+  state = {...INITIAL_STATE};
+
+  componentDidMount() {
+    document.addEventListener('keydown', ({ key }) => {
+      if (BUTTONS.includes(key)) return this.onClick(key);
+    });
+  }
 
   onClick = (char) => {
     switch (char) {
+      case 'Backspace': {
+        const expressionFactors = getAllButLast(this.state.expressionFactors);
+        return this.setState({ expressionFactors });
+      }
       case 'C':
         return this.setState(INITIAL_STATE);
+      case 'Enter':
       case '=':
         return this.setState({ expressionFactors: [this.state.result], result: null });
       default:
@@ -28,15 +41,16 @@ class App extends PureComponent {
   getNewExpression(char) {
     const { expressionFactors } = this.state;
     const isNewCharSeparator = SEPARATORS.includes(char);
-    const lastFactor = last(expressionFactors);
+    const lastFactor = getLast(expressionFactors);
     const isLastFactorSeparator = SEPARATORS.includes(lastFactor);
+    const allFactorsButLast = getAllButLast(expressionFactors);
 
     if (isNewCharSeparator) {
-      if (isLastFactorSeparator) return [...expressionFactors.slice(0, -1), char]; // replace last separator
+      if (isLastFactorSeparator) return [...allFactorsButLast, char]; // replace last separator
       return [...expressionFactors, char]; // add new separator
     }
     if (isLastFactorSeparator) return [...expressionFactors, char]; // add new number
-    return [...expressionFactors.slice(0, -1), (lastFactor || '') + char]; // update last number
+    return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
   }
 
   updateResult() {
