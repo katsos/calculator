@@ -25,16 +25,16 @@ class App extends PureComponent {
     switch (char) {
       case 'Backspace': {
         const expressionFactors = getAllButLast(this.state.expressionFactors);
-        return this.setState({ expressionFactors });
+        return this.updateDisplay(expressionFactors);
       }
       case 'C':
         return this.setState(INITIAL_STATE);
       case 'Enter':
       case '=':
-        return this.setState({ expressionFactors: [this.state.result], result: null });
+        return this.updateDisplay([this.state.result], null);
       default:
         const expressionFactors = this.getNewExpression(char);
-        this.setState({ expressionFactors }, this.updateResult);
+        this.updateDisplay(expressionFactors);
     }
   }
 
@@ -53,9 +53,13 @@ class App extends PureComponent {
     return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
   }
 
-  updateResult() {
+  updateDisplay(expressionFactors, result) {
+    this.setState({ expressionFactors }, () => this.updateResult(result));
+  }
+
+  updateResult(overwriteResult) {
     const { expressionFactors } = this.state;
-    this.setState({ result: calculateExpression(expressionFactors) });
+    this.setState({ result: overwriteResult || calculateExpression(expressionFactors) });
   }
 
   render() {
