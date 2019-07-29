@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   result: null,
 };
 
-const BUTTONS = [KEYBOARD_BUTTONS, Object.values(BUTTONS_LAYOUT).flat()].flat();
+const BUTTONS = [...KEYBOARD_BUTTONS, ...Object.values(BUTTONS_LAYOUT).flat()];
 
 class App extends PureComponent {
   state = {...INITIAL_STATE};
