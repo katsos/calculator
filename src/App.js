@@ -67,13 +67,10 @@ class App extends PureComponent {
     return SEPARATORS.includes(lastFactor);
   }
 
-  updateDisplay(expressionFactors, result) {
-    this.setState({ expressionFactors }, () => this.updateResult(result));
-  }
-
-  updateResult(overwriteResult) {
-    const { expressionFactors } = this.state;
-    this.setState({ result: overwriteResult || calculateExpression(expressionFactors) });
+  updateDisplay(expressionFactors, overwriteResult) {
+    const newResult = overwriteResult || calculateExpression(expressionFactors);
+    if (newResult > Number.MAX_SAFE_INTEGER) return; // TODO: show error
+    this.setState({ expressionFactors, result: overwriteResult || newResult });
   }
 
   render() {
