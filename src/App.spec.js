@@ -48,5 +48,32 @@ describe('App', () => {
       const expressionFactors = wrapper.state().expressionFactors;
       expect(expressionFactors).toEqual(['5', '-', '2']);
     });
+
+    describe('%', () => {
+      it('should convert last number', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('%');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['0.05']);
+      });
+
+      it('should convert last number if there are more than one', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('-');
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('%');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['55', '-', '0.05']);
+      });
+
+      it('should do nothing if last factor is a separator', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('-');
+        wrapper.instance().handleInput('%');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['5', '-']);
+      });
+    });
   });
 });

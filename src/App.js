@@ -47,26 +47,24 @@ class App extends PureComponent {
     }
   }
 
-  isLastFactorSeparator() {
-    const { expressionFactors } = this.state;
-    const lastFactor = getLast(expressionFactors);
-    return SEPARATORS.includes(lastFactor);
-  }
-
   getNewExpression(char) {
     const { expressionFactors } = this.state;
-    const isNewCharSeparator = SEPARATORS.includes(char);
-    const isLastFactorSeparator = this.isLastFactorSeparator();
     const allFactorsButLast = getAllButLast(expressionFactors);
 
-    if (isNewCharSeparator) {
-      if (isLastFactorSeparator) return [...allFactorsButLast, char]; // replace last separator
+    if (SEPARATORS.includes(char)) {
+      if (this.isLastFactorSeparator) return [...allFactorsButLast, char]; // replace last separator
       return [...expressionFactors, char]; // add new separator
     }
-    if (isLastFactorSeparator) return [...expressionFactors, char]; // add new number
+    if (this.isLastFactorSeparator) return [...expressionFactors, char]; // add new number
 
     const lastFactor = getLast(expressionFactors);
     return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
+  }
+
+  get isLastFactorSeparator() {
+    const { expressionFactors } = this.state;
+    const lastFactor = getLast(expressionFactors);
+    return SEPARATORS.includes(lastFactor);
   }
 
   updateDisplay(expressionFactors, result) {
