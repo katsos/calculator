@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import ButtonPanel from './components/ButtonPanel';
 import calculateExpression from './logic/calculate';
 import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from './buttons';
@@ -14,7 +14,7 @@ const flatButtonsLayout = Object.values(BUTTONS_LAYOUT)
   .reduce((acc, curr) => [...acc, ...curr] , []);
 const BUTTONS = [...KEYBOARD_BUTTONS, ...flatButtonsLayout];
 
-class App extends PureComponent {
+class App extends React.PureComponent {
   state = {...INITIAL_STATE};
   expressionRef = React.createRef();
 
