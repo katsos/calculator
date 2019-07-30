@@ -27,6 +27,13 @@ describe('App', () => {
         expect(expressionFactors).toEqual(['55']);
       });
 
+      it('should replace the last number if it is exactly "0"', () => {
+        wrapper.instance().handleInput('0');
+        wrapper.instance().handleInput('1');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['1']);
+      });
+
       it('should add the new number after last separator', () => {
         wrapper.instance().handleInput('5');
         wrapper.instance().handleInput('-');

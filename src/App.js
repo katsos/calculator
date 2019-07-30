@@ -69,6 +69,7 @@ class App extends PureComponent {
     if (this.isLastFactorSeparator) return [...expressionFactors, char]; // add new number
 
     const lastFactor = getLast(expressionFactors);
+    if (lastFactor === '0') return [...allFactorsButLast, char]; // replace zero number
     return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
   }
 
