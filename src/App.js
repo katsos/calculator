@@ -62,6 +62,7 @@ class App extends PureComponent {
     const allFactorsButLast = getAllButLast(expressionFactors);
 
     if (SEPARATORS.includes(char)) {
+      if (!expressionFactors.length) return []; // an operator must always come after a number
       if (this.isLastFactorSeparator) return [...allFactorsButLast, char]; // replace last separator
       return [...expressionFactors, char]; // add new separator
     }

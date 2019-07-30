@@ -37,6 +37,12 @@ describe('App', () => {
     });
 
     describe('separators', () => {
+      it('should do nothing if there are no other factors', () => {
+        wrapper.instance().handleInput('-');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual([]);
+      });
+
       it('should add the new separator', () => {
         wrapper.instance().handleInput('5');
         wrapper.instance().handleInput('+');
