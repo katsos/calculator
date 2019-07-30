@@ -85,7 +85,7 @@ class App extends PureComponent {
 
   updateDisplay(expressionFactors, overwriteResult) {
     const newResult = overwriteResult || calculateExpression(expressionFactors);
-    if (newResult > Number.MAX_SAFE_INTEGER) return; // TODO: show error
+    if (newResult > Number.MAX_SAFE_INTEGER || newResult < Number.MIN_SAFE_INTEGER) return; // TODO: show error
     this.setState({ expressionFactors, result: overwriteResult || newResult }, () => {
       const { scrollHeight, offsetHeight } = this.expressionRef.current;
       if (scrollHeight < offsetHeight) return;
