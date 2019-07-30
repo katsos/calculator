@@ -94,8 +94,8 @@ class App extends PureComponent {
     return (
       <div className='App'>
         <div className='App__display'>
-          <p className='App__display__expression'>{expressionFactors.join(' ')}</p>
           <p className='App__display__result'>{result}</p>
+          <p className='App__display__expression'>{expressionFactors.join(' ')}</p>
         </div>
         <ButtonPanel onClick={this.handleInput}/>
       </div>

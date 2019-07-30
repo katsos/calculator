@@ -1,31 +1,40 @@
 .App {
-  max-width: 640px;
+  max-width: 520px;
   height: 100vh;
   margin: 0 auto;
+  background: linear-gradient(195deg, #000544 15%, #00d6c5 100%);
+  font-family: 'Exo 2', "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  button { font-family: inherit }
 
   &__display {
     height: 25vh;
-    background-color: #858694;
     color: white;
     text-align: right;
     font-weight: 200;
     flex: 0 0 auto;
     width: 100%;
+    padding: 5px;
 
-    &__expression {
-      font-size: 3rem;
-    }
+    $result-height: 60px;
 
     &__result {
+      min-height: 60px;
+      font-size: 3rem;
+      margin: 0 0 20px;
+      font-size: 50px;
+      font-weight: 600;
+    }
+
+    &__expression {
       font-size: 2rem;
+      overflow: auto;
+      height: calc(100% - #{$result-height});
     }
 
     > p {
       width: 100%;
-      overflow-x: auto;
-
-      margin: 0 0 20px;
-      padding: 0 15px;
+      padding: 0;
+      margin: 0;
     }
   }
 }

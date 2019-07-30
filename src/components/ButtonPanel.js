@@ -18,7 +18,8 @@ const { TOP, NUMBERS, BOTTOM, SIDE } = BUTTONS;
 const ButtonPanel = ({ onClick }) => (
   <div className='ButtonPanel'>
     <div className='ButtonPanel__left'>
-      {[...TOP, ...NUMBERS, ...BOTTOM].map(b => <Button key={b} name={b} onClick={() => onClick(b)} />)}
+      {TOP.map(b => <Button className='Button--dark' key={b} name={b} onClick={() => onClick(b)} />)}
+      {[...NUMBERS, ...BOTTOM].map(b => <Button key={b} name={b} onClick={() => onClick(b)} />)}
     </div>
     <div className='ButtonPanel__right'>
       {SIDE.map(b => <Button key={b} name={b} onClick={() => onClick(b)} />)}

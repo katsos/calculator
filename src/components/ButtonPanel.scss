@@ -1,7 +1,6 @@
 .ButtonPanel {
   height: 75vh;
   display: flex;
-  background-color: grey;
 
   > div {
     display: flex;
@@ -10,23 +9,28 @@
   }
 
   &__left {
-    width: 75%;
+    width: 80%;
     flex-direction: row;
 
     .Button {
       width: calc(100%/3);
       height: calc(100%/5);
+
+      &--dark {
+        background: rgba(0, 0, 0, 0.15);
+      }
     }
   }
 
   &__right {
-    width: 25%;
+    width: 20%;
     display: flex;
     flex-direction: column;
 
     .Button {
       width: 100%;
       flex: 1;
+      background: rgba(148, 148, 148, 0.35);
     }
   }
 }
