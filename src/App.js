@@ -16,6 +16,7 @@ const BUTTONS = [...KEYBOARD_BUTTONS, ...flatButtonsLayout];
 
 class App extends PureComponent {
   state = {...INITIAL_STATE};
+  expressionRef = React.createRef();
 
   componentDidMount() {
     document.addEventListener('keydown', ({ key }) => {
@@ -85,7 +86,11 @@ class App extends PureComponent {
   updateDisplay(expressionFactors, overwriteResult) {
     const newResult = overwriteResult || calculateExpression(expressionFactors);
     if (newResult > Number.MAX_SAFE_INTEGER) return; // TODO: show error
-    this.setState({ expressionFactors, result: overwriteResult || newResult });
+    this.setState({ expressionFactors, result: overwriteResult || newResult }, () => {
+      const { scrollHeight, offsetHeight } = this.expressionRef.current;
+      if (scrollHeight < offsetHeight) return;
+      this.expressionRef.current.scroll(0, scrollHeight - offsetHeight);
+    });
   }
 
   render() {
@@ -95,7 +100,7 @@ class App extends PureComponent {
       <div className='App'>
         <div className='App__display'>
           <p className='App__display__result'>{result}</p>
-          <p className='App__display__expression'>{expressionFactors.join(' ')}</p>
+          <p className='App__display__expression' ref={this.expressionRef}>{expressionFactors.join(' ')}</p>
         </div>
         <ButtonPanel onClick={this.handleInput}/>
       </div>
