@@ -36,6 +36,16 @@ class App extends PureComponent {
         return this.updateDisplay([this.state.result], null);
       case 'Slash': // alias
         return this.onChar('÷');
+      case ',':
+      case '.': {
+        const { expressionFactors } = this.state;
+        if (!this.lastFactor || this.isLastFactorSeparator) return this.updateDisplay([...expressionFactors, '0.']);
+
+        const isEligibleToDecimalized = !this.lastFactor.endsWith('.') && Number.isInteger(Number(this.lastFactor));
+        if (!isEligibleToDecimalized) return;
+
+        return this.updateDisplay([...getAllButLast(expressionFactors), this.lastFactor + '.']);
+      }
       case '%': {
         if (this.isLastFactorSeparator) return; // TODO: disable % in this case
         const { expressionFactors } = this.state;
@@ -61,10 +71,13 @@ class App extends PureComponent {
     return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
   }
 
-  get isLastFactorSeparator() {
+  get lastFactor() {
     const { expressionFactors } = this.state;
-    const lastFactor = getLast(expressionFactors);
-    return SEPARATORS.includes(lastFactor);
+    return getLast(expressionFactors);
+  }
+
+  get isLastFactorSeparator() {
+    return SEPARATORS.includes(this.lastFactor);
   }
 
   updateDisplay(expressionFactors, overwriteResult) {

@@ -13,41 +13,46 @@ describe('App', () => {
       wrapper.state().expressionFactors = [];
     });
 
-    it('should add the new number', () => {
-      wrapper.instance().handleInput('5');
-      const expressionFactors = wrapper.state().expressionFactors;
-      expect(expressionFactors).toEqual(['5']);
+    describe('digits', () => {
+      it('should add the new number', () => {
+        wrapper.instance().handleInput('5');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['5']);
+      });
+
+      it('should update the last number', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('5');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['55']);
+      });
+
+      it('should add the new number after last separator', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('-');
+        wrapper.instance().handleInput('2');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['5', '-', '2']);
+      });
     });
 
-    it('should update the last number', () => {
-      wrapper.instance().handleInput('5');
-      wrapper.instance().handleInput('5');
-      const expressionFactors = wrapper.state().expressionFactors;
-      expect(expressionFactors).toEqual(['55']);
+    describe('separators', () => {
+      it('should add the new separator', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('+');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['5', '+']);
+      });
+
+      it('should replace last separator', () => {
+        wrapper.instance().handleInput('5');
+        wrapper.instance().handleInput('+');
+        wrapper.instance().handleInput('-');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['5', '-']);
+      });
     });
 
-    it('should add the new separator', () => {
-      wrapper.instance().handleInput('5');
-      wrapper.instance().handleInput('+');
-      const expressionFactors = wrapper.state().expressionFactors;
-      expect(expressionFactors).toEqual(['5', '+']);
-    });
-
-    it('should replace last separator', () => {
-      wrapper.instance().handleInput('5');
-      wrapper.instance().handleInput('+');
-      wrapper.instance().handleInput('-');
-      const expressionFactors = wrapper.state().expressionFactors;
-      expect(expressionFactors).toEqual(['5', '-']);
-    });
-
-    it('should add the new number after last separator', () => {
-      wrapper.instance().handleInput('5');
-      wrapper.instance().handleInput('-');
-      wrapper.instance().handleInput('2');
-      const expressionFactors = wrapper.state().expressionFactors;
-      expect(expressionFactors).toEqual(['5', '-', '2']);
-    });
 
     describe('%', () => {
       it('should convert last number', () => {
@@ -73,6 +78,56 @@ describe('App', () => {
         wrapper.instance().handleInput('%');
         const expressionFactors = wrapper.state().expressionFactors;
         expect(expressionFactors).toEqual(['5', '-']);
+      });
+    });
+
+    describe('.', () => {
+      it('should add a decimal dot after the last factor if it is an integer number', () => {
+        wrapper.instance().handleInput('1');
+        wrapper.instance().handleInput('.');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['1.']);
+      });
+
+      it('should update number after a dot', () => {
+        wrapper.instance().handleInput('1');
+        wrapper.instance().handleInput('.');
+        wrapper.instance().handleInput('2');
+        const expressionFactors = wrapper.state().expressionFactors;
+        expect(expressionFactors).toEqual(['1.2']);
+      });
+
+      describe('should add a zero before the dot', () => {
+        it('without a previous expression factor', () => {
+          wrapper.instance().handleInput('.');
+          const expressionFactors = wrapper.state().expressionFactors;
+          expect(expressionFactors).toEqual(['0.']);
+        });
+
+        it('after a separator', () => {
+          wrapper.instance().handleInput('5');
+          wrapper.instance().handleInput('+');
+          wrapper.instance().handleInput('.');
+          const expressionFactors = wrapper.state().expressionFactors;
+          expect(expressionFactors).toEqual(['5', '+', '0.']);
+        });
+      });
+
+      describe('should do nothing', () => {
+        it('if last factor ends with a dot', () => {
+          wrapper.instance().handleInput('.');
+          wrapper.instance().handleInput('.');
+          const expressionFactors = wrapper.state().expressionFactors;
+          expect(expressionFactors).toEqual(['0.']);
+        });
+
+        it('if last factor (number) is a decimal', () => {
+          wrapper.instance().handleInput('1');
+          wrapper.instance().handleInput('.');
+          wrapper.instance().handleInput('.');
+          const expressionFactors = wrapper.state().expressionFactors;
+          expect(expressionFactors).toEqual(['1.']);
+        });
       });
     });
   });
