@@ -10,7 +10,9 @@ const INITIAL_STATE = {
   result: null,
 };
 
-const BUTTONS = [...KEYBOARD_BUTTONS, ...Object.values(BUTTONS_LAYOUT).flat()];
+const flatButtonsLayout = Object.values(BUTTONS_LAYOUT)
+  .reduce((acc, curr) => [...acc, ...curr] , []);
+const BUTTONS = [...KEYBOARD_BUTTONS, ...flatButtonsLayout];
 
 class App extends PureComponent {
   state = {...INITIAL_STATE};
@@ -34,17 +36,27 @@ class App extends PureComponent {
         return this.updateDisplay([this.state.result], null);
       case 'Slash': // alias
         return this.onChar('÷');
+      case '%': {
+        if (this.isLastFactorSeparator) return; // TODO: disable % in this case
+        const { expressionFactors } = this.state;
+        return this.updateDisplay([...getAllButLast(expressionFactors), getLast(expressionFactors) / 100]);
+      }
       default:
         const expressionFactors = this.getNewExpression(char);
         this.updateDisplay(expressionFactors);
     }
   }
 
+  isLastFactorSeparator() {
+    const { expressionFactors } = this.state;
+    const lastFactor = getLast(expressionFactors);
+    return SEPARATORS.includes(lastFactor);
+  }
+
   getNewExpression(char) {
     const { expressionFactors } = this.state;
     const isNewCharSeparator = SEPARATORS.includes(char);
-    const lastFactor = getLast(expressionFactors);
-    const isLastFactorSeparator = SEPARATORS.includes(lastFactor);
+    const isLastFactorSeparator = this.isLastFactorSeparator();
     const allFactorsButLast = getAllButLast(expressionFactors);
 
     if (isNewCharSeparator) {
@@ -52,6 +64,8 @@ class App extends PureComponent {
       return [...expressionFactors, char]; // add new separator
     }
     if (isLastFactorSeparator) return [...expressionFactors, char]; // add new number
+
+    const lastFactor = getLast(expressionFactors);
     return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
   }
 
