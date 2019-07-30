@@ -54,7 +54,7 @@ describe('App', () => {
         wrapper.instance().handleInput('5');
         wrapper.instance().handleInput('%');
         const expressionFactors = wrapper.state().expressionFactors;
-        expect(expressionFactors).toEqual(['0.05']);
+        expect(expressionFactors).toEqual([0.05]);
       });
 
       it('should convert last number if there are more than one', () => {
@@ -64,7 +64,7 @@ describe('App', () => {
         wrapper.instance().handleInput('5');
         wrapper.instance().handleInput('%');
         const expressionFactors = wrapper.state().expressionFactors;
-        expect(expressionFactors).toEqual(['55', '-', '0.05']);
+        expect(expressionFactors).toEqual(['55', '-', 0.05]);
       });
 
       it('should do nothing if last factor is a separator', () => {
