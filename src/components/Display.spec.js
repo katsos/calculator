@@ -6,6 +6,7 @@ describe('Display', () => {
   describe('expressionFactorsDisplayFormat', () => {
     let wrapper;
     beforeAll(() => {
+      Display.prototype.componentDidUpdate = jest.fn();
       wrapper = shallow(<Display expressionFactors={[]} />);
     });
 
