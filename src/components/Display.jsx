@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { numberWithCommas } from '../helpers';
+import { SEPARATORS } from '../buttons';
 import './Display.scss';
 
 class Display extends React.PureComponent {
@@ -13,10 +15,9 @@ class Display extends React.PureComponent {
 
   expressionFactorsDisplayFormat() {
     return this.props.expressionFactors.map((v) => {
-      const number = Number(v);
-      if (!number || v === '0.') return v;
-      const numberCommas = numberWithCommas(v);
-      return (number < 0) ? `(-${Math.abs(numberCommas)})` : numberCommas;
+      if (SEPARATORS.includes(v)) return v;
+      const numberCommas = numberWithCommas(v) + ((v.match(/(\d|,)*\.$/)) ? '.' : '');
+      return (Number(v) < 0) ? `(-${Math.abs(numberCommas)})` : numberCommas;
     }).join(' ');
   }
 
