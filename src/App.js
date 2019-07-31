@@ -39,7 +39,9 @@ class App extends React.PureComponent {
         return this.onChar('÷');
       case ',':
       case '.': {
-        if (!this.lastFactor || this.isLastFactorSeparator) return this.lastFactor = '0.';
+        if (!this.lastFactor || this.isLastFactorSeparator) {
+          return this.updateDisplay([...this.state.expressionFactors, '0.']);
+        }
 
         const isEligibleToDecimalized = !this.lastFactor.endsWith('.') && Number.isInteger(Number(this.lastFactor));
         if (!isEligibleToDecimalized) return;
