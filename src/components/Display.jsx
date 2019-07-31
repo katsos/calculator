@@ -5,6 +5,11 @@ import { SEPARATORS } from '../buttons';
 import './Display.scss';
 
 class Display extends React.PureComponent {
+  propTypes = {
+    result: PropTypes.string,
+    expressionFactors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }
+
   expressionRef = React.createRef();
   // TODO: scroll expression on expression update
 
