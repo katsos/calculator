@@ -34,7 +34,7 @@ class App extends React.PureComponent {
         return this.setState(INITIAL_STATE);
       case 'Enter':
       case '=':
-        return this.updateDisplay([this.state.result], null);
+        return this.updateDisplay([this.state.result.toString()]);
       case 'Slash': // alias
         return this.onChar('÷');
       case ',':
@@ -91,10 +91,10 @@ class App extends React.PureComponent {
     return this.updateDisplay([...getAllButLast(this.state.expressionFactors), value]);
   }
 
-  updateDisplay(expressionFactors, overwriteResult) {
-    const newResult = overwriteResult || calculateExpression(expressionFactors);
-    if (newResult > Number.MAX_SAFE_INTEGER || newResult < Number.MIN_SAFE_INTEGER) return; // TODO: show error
-    this.setState({ expressionFactors, result: overwriteResult || newResult });
+  updateDisplay(expressionFactors) {
+    const result = calculateExpression(expressionFactors);
+    if (result > Number.MAX_SAFE_INTEGER || result < Number.MIN_SAFE_INTEGER) return; // TODO: show error
+    this.setState({ expressionFactors, result });
   }
 
   render() {
