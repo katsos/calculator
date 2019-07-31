@@ -1,7 +1,8 @@
 function calculateExpression(factors) {
   if (factors.length === 1) return Number(factors[0]);
   if (factors.length % 2 === 0) return null; // we don't support on the fly evaluation if there are trailing operators
-  return calculateExpression([calculateOperation(...factors.slice(0, 3)), ...factors.slice(3)]);
+  const operationResult = calculateOperation(...factors.slice(0, 3));
+  return calculateExpression([operationResult.toString(), ...factors.slice(3)]);
 }
 
 export function calculateOperation(a, operator, b) {
