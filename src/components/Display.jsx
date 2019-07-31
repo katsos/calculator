@@ -9,11 +9,9 @@ class Display extends React.PureComponent {
     result: PropTypes.string,
     expressionFactors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
-
   expressionRef = React.createRef();
-  // TODO: scroll expression on expression update
 
-  scrollExpression() {
+  componentDidUpdate() {
     const { scrollHeight, offsetHeight } = this.expressionRef.current;
     if (scrollHeight < offsetHeight) return;
     this.expressionRef.current.scroll(0, scrollHeight - offsetHeight);
