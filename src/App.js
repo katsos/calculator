@@ -39,18 +39,20 @@ class App extends React.PureComponent {
         return this.onChar('÷');
       case ',':
       case '.': {
-        const { expressionFactors } = this.state;
-        if (!this.lastFactor || this.isLastFactorSeparator) return this.updateDisplay([...expressionFactors, '0.']);
+        if (!this.lastFactor || this.isLastFactorSeparator) return this.lastFactor = '0.';
 
         const isEligibleToDecimalized = !this.lastFactor.endsWith('.') && Number.isInteger(Number(this.lastFactor));
         if (!isEligibleToDecimalized) return;
 
-        return this.updateDisplay([...getAllButLast(expressionFactors), this.lastFactor + '.']);
+        return this.lastFactor = this.lastFactor + '.';
       }
       case '%': {
         if (this.isLastFactorSeparator) return; // TODO: disable % in this case
-        const { expressionFactors } = this.state;
-        return this.updateDisplay([...getAllButLast(expressionFactors), getLast(expressionFactors) / 100]);
+        return this.lastFactor = this.lastFactor / 100;
+      }
+      case '+/-': {
+        if (this.isLastFactorSeparator) return;
+        return this.lastFactor = Number(this.lastFactor) * -1;
       }
       default:
         const expressionFactors = this.getNewExpression(char);
@@ -81,6 +83,10 @@ class App extends React.PureComponent {
 
   get isLastFactorSeparator() {
     return SEPARATORS.includes(this.lastFactor);
+  }
+
+  set lastFactor(value) {
+    return this.updateDisplay([...getAllButLast(this.state.expressionFactors), value]);
   }
 
   updateDisplay(expressionFactors, overwriteResult) {
