@@ -6,6 +6,7 @@ import './Display.scss';
 
 class Display extends React.PureComponent {
   expressionRef = React.createRef();
+  // TODO: scroll expression on expression update
 
   scrollExpression() {
     const { scrollHeight, offsetHeight } = this.expressionRef.current;

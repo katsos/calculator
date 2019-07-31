@@ -94,9 +94,8 @@ class App extends React.PureComponent {
   updateDisplay(expressionFactors, overwriteResult) {
     const newResult = overwriteResult || calculateExpression(expressionFactors);
     if (newResult > Number.MAX_SAFE_INTEGER || newResult < Number.MIN_SAFE_INTEGER) return; // TODO: show error
-    this.setState({ expressionFactors, result: overwriteResult || newResult }, this.scrollExpression);
+    this.setState({ expressionFactors, result: overwriteResult || newResult });
   }
-
 
   render() {
     const { expressionFactors, result } = this.state;
