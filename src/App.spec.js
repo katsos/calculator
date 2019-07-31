@@ -7,6 +7,7 @@ describe('App', () => {
     let wrapper;
     beforeAll(() => {
       wrapper = shallow(<App />);
+      wrapper.instance().scrollExpression = jest.fn().mockReturnValue();
     });
 
     beforeEach(() => {
