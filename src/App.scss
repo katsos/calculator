@@ -4,36 +4,4 @@
   margin: 0 auto;
   background: linear-gradient(195deg, #000544 15%, #00d6c5 100%);
   font-family: 'Exo 2', 'Helvetica Neue', sans-serif;
-
-  &__display {
-    height: 25vh;
-    color: white;
-    text-align: right;
-    font-weight: 200;
-    flex: 0 0 auto;
-    width: 100%;
-    padding: 5px;
-
-    $result-height: 60px;
-
-    &__result {
-      min-height: 60px;
-      font-size: 3rem;
-      margin: 0 0 20px;
-      font-size: 50px;
-      font-weight: 600;
-    }
-
-    &__expression {
-      font-size: 2rem;
-      overflow: auto;
-      height: calc(100% - #{$result-height});
-    }
-
-    > p {
-      width: 100%;
-      padding: 0;
-      margin: 0;
-    }
-  }
 }

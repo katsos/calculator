@@ -1,4 +1,5 @@
 import React from 'react';
+import Display from './components/Display';
 import ButtonPanel from './components/ButtonPanel';
 import calculateExpression from './logic/calculate';
 import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from './buttons';
@@ -16,7 +17,6 @@ const BUTTONS = [...KEYBOARD_BUTTONS, ...flatButtonsLayout];
 
 class App extends React.PureComponent {
   state = {...INITIAL_STATE};
-  expressionRef = React.createRef();
 
   componentDidMount() {
     document.addEventListener('keydown', ({ key }) => {
@@ -97,21 +97,13 @@ class App extends React.PureComponent {
     this.setState({ expressionFactors, result: overwriteResult || newResult }, this.scrollExpression);
   }
 
-  scrollExpression() {
-    const { scrollHeight, offsetHeight } = this.expressionRef.current;
-    if (scrollHeight < offsetHeight) return;
-    this.expressionRef.current.scroll(0, scrollHeight - offsetHeight);
-  }
 
   render() {
     const { expressionFactors, result } = this.state;
 
     return (
       <div className='App'>
-        <div className='App__display'>
-          <p className='App__display__result'>{result}</p>
-          <p className='App__display__expression' ref={this.expressionRef}>{expressionFactors.join(' ')}</p>
-        </div>
+        <Display {...{ expressionFactors, result }} />
         <ButtonPanel onClick={this.handleInput}/>
       </div>
     );
