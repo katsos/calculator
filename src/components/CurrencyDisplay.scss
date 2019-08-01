@@ -34,4 +34,15 @@
     -moz-appearance: none;
     appearance: none;
   }
+
+  input {
+    width: 50%;
+    color: white;
+    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: inherit;
+    background: transparent;
+    border: 2px solid rgba(white, 0.7);
+  }
 }
