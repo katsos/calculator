@@ -20,8 +20,8 @@ const INITIAL_STATE = {
     target: 'GBP',
   },
   currencyValues: {
-    base: null,
-    target: null,
+    base: '',
+    target: '',
   },
 };
 
@@ -37,10 +37,21 @@ class CurrencyDisplay extends React.PureComponent {
         target: INITIAL_STATE.currencyValues.target,
       },
     };
+
+    this.baseInputRef = React.createRef();
+    this.targetInputRef = React.createRef();
   }
 
   componentDidMount() {
     this.fetchRates();
+  }
+
+  handleInput = (input) => {
+    if (!input.match(/\d|\./)) return;
+    const { currencyValues } = this.state;
+    const inputName = (this.lastFocusedElement === this.targetInputRef.current) ? 'target' : 'base';
+    const diff = { [inputName]: `${currencyValues[inputName]}${input}` };
+    return this.setState({ currencyValues: { ...currencyValues, ...diff } });
   }
 
   onChangeBase = ({ target: { value }}) =>
@@ -55,6 +66,8 @@ class CurrencyDisplay extends React.PureComponent {
       : { base: value / this.rate, target: value };
     this.setState({ currencyValues });
   }
+
+  onFocus = ({ target }) => this.lastFocusedElement = target;
 
   async fetchRates() {
     this.setState({ rates: null });
@@ -78,7 +91,15 @@ class CurrencyDisplay extends React.PureComponent {
           <select name='base' value={currencies.base} onChange={this.onChangeBase}>
             {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
-          <input name='base' value={currencyValues.base} onChange={this.onChangeValue} />
+          <input
+            name='base'
+            autoFocus
+            readOnly
+            ref={this.baseInputRef}
+            value={currencyValues.base}
+            onFocus={this.onFocus}
+            onChange={this.onChangeValue}
+          />
         </div>
         <p className='CurrencyDisplay__rate'>Rate: {this.rate}</p>
         <div>
@@ -87,7 +108,14 @@ class CurrencyDisplay extends React.PureComponent {
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
-          <input name='target' value={currencyValues.target} onChange={this.onChangeValue} />
+          <input
+            name='target'
+            readOnly
+            ref={this.targetInputRef}
+            value={currencyValues.target}
+            onFocus={this.onFocus}
+            onChange={this.onChangeValue}
+          />
         </div>
 
       </div>

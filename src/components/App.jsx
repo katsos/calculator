@@ -19,6 +19,7 @@ const BUTTONS = [...KEYBOARD_BUTTONS, ...flatButtonsLayout];
 
 class App extends React.PureComponent {
   state = {...INITIAL_STATE};
+  currencyDisplayRef = React.createRef();
 
   componentDidMount() {
     document.addEventListener('keydown', ({ key }) => {
@@ -27,6 +28,8 @@ class App extends React.PureComponent {
   }
 
   handleInput = (char) => {
+    if (this.state.isCurrencyConvOn) return this.currencyDisplayRef.current.handleInput(char);
+
     switch (char) {
       case 'Backspace': {
         const expressionFactors = getAllButLast(this.state.expressionFactors);
@@ -107,7 +110,7 @@ class App extends React.PureComponent {
     return (
       <div className='App'>
         <div className='App__display'>
-          {isCurrencyConvOn ? <CurrencyDisplay />
+          {isCurrencyConvOn ? <CurrencyDisplay ref={this.currencyDisplayRef}/>
             : <Display {...{ expressionFactors, result }} />
           }
         </div>
