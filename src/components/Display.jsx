@@ -21,7 +21,7 @@ class Display extends React.PureComponent {
     return this.props.expressionFactors.map((v) => {
       if (SEPARATORS.includes(v)) return v;
       const numberCommas = numberWithCommas(v) + ((v.match(/(\d|,)*\.$/)) ? '.' : '');
-      return (Number(v) < 0) ? `(-${Math.abs(numberCommas)})` : numberCommas;
+      return (Number(v) < 0) ? `(${numberCommas})` : numberCommas;
     }).join(' ');
   }
 

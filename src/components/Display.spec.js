@@ -39,5 +39,17 @@ describe('Display', () => {
       expect(wrapper.instance().expressionFactorsDisplayFormat())
         .toBe('1,234.1234');
     });
+
+    it('should show negative numbers in (-X) format', () => {
+      wrapper.setProps({ expressionFactors: ['-33'] });
+      expect(wrapper.instance().expressionFactorsDisplayFormat())
+        .toBe('(-33)');
+    });
+
+    it('should show negative numbers comma separated in (-X,yzw) format', () => {
+      wrapper.setProps({ expressionFactors: ['-9876'] });
+      expect(wrapper.instance().expressionFactorsDisplayFormat())
+        .toBe('(-9,876)');
+    });
   });
 });
