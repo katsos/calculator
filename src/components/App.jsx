@@ -106,9 +106,11 @@ class App extends React.PureComponent {
 
     return (
       <div className='App'>
-        {isCurrencyConvOn ? <CurrencyDisplay />
-          : <Display {...{ expressionFactors, result }} />
-        }
+        <div className='App__display'>
+          {isCurrencyConvOn ? <CurrencyDisplay />
+            : <Display {...{ expressionFactors, result }} />
+          }
+        </div>
         <ButtonPanel onClick={this.handleInput}/>
       </div>
     );

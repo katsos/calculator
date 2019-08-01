@@ -1,5 +1,6 @@
 import React from 'react';
 import { getRates } from '../services/api';
+import './CurrencyDisplay.scss';
 
 const CURRENCIES = [
   'AUD', 'BGN', 'BRL', 'CAD',
@@ -73,19 +74,22 @@ class CurrencyDisplay extends React.PureComponent {
 
     return (
       <div className='CurrencyDisplay'>
-        <select name='base' value={currencies.base} onChange={this.onChangeBase}>
-          {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <input name='base' value={currencyValues.base} onChange={this.onChangeValue} />
-
+        <div>
+          <select name='base' value={currencies.base} onChange={this.onChangeBase}>
+            {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <input name='base' value={currencyValues.base} onChange={this.onChangeValue} />
+        </div>
         <p className='CurrencyDisplay__rate'>Rate: {this.rate}</p>
+        <div>
+          <select name='target' value={currencies.target} onChange={this.onChangeTarget} disabled={!rates}>
+            {CURRENCIES.filter(v => v !== currencies.base).map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <input name='target' value={currencyValues.target} onChange={this.onChangeValue} />
+        </div>
 
-        <select name='target' value={currencies.target} onChange={this.onChangeTarget} disabled={!rates}>
-          {CURRENCIES.filter(v => v !== currencies.base).map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
-        <input name='target' value={currencyValues.target} onChange={this.onChangeValue} />
       </div>
     );
   }
