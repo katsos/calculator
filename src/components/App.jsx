@@ -1,9 +1,9 @@
 import React from 'react';
-import Display from './components/Display';
-import ButtonPanel from './components/ButtonPanel';
-import calculateExpression from './logic/calculate';
-import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from './buttons';
-import { getLast, getAllButLast } from './helpers';
+import Display from './Display';
+import ButtonPanel from './ButtonPanel';
+import calculateExpression from '../logic/calculate';
+import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from '../buttons';
+import { getLast, getAllButLast } from '../helpers';
 import './App.scss';
 
 const INITIAL_STATE = {
