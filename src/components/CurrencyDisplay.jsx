@@ -4,7 +4,7 @@ import './CurrencyDisplay.scss';
 
 const CURRENCIES = [
   'AUD', 'BGN', 'BRL', 'CAD',
-  'CHF', 'CNY', 'CZK', 'DKK',
+  'CHF', 'CNY', 'CZK', 'DKK', 'EUR',
   'GBP', 'HKD', 'HRK', 'HUF',
   'IDR', 'ILS', 'INR', 'ISK',
   'JPY', 'KRW', 'MXN', 'MYR',
