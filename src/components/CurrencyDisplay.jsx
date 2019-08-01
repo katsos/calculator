@@ -51,7 +51,7 @@ class CurrencyDisplay extends React.PureComponent {
     const { currencyValues } = this.state;
     const inputName = (this.lastFocusedElement === this.targetInputRef.current) ? 'target' : 'base';
     const diff = { [inputName]: `${currencyValues[inputName]}${input}` };
-    return this.setState({ currencyValues: { ...currencyValues, ...diff } });
+    return this.setState({ currencyValues: { ...INITIAL_STATE.currencyValues, ...diff } });
   }
 
   onChangeBase = ({ target: { value }}) =>
@@ -60,12 +60,8 @@ class CurrencyDisplay extends React.PureComponent {
   onChangeTarget = ({ target: { value }}) =>
     this.setState({ currencies: { ...this.state.currencies, target: value }})
 
-  onChangeValue = ({ target: { name, value }}) => {
-    const currencyValues = (name === 'base')
-      ? { base: value, target: value * this.rate }
-      : { base: value / this.rate, target: value };
-    this.setState({ currencyValues });
-  }
+  onChangeValue = ({ target: { name, value } }) =>
+    this.setState({ currencyValues: { ...INITIAL_STATE.currencyValues, [name]: value } })
 
   onFocus = ({ target }) => this.lastFocusedElement = target;
 
@@ -96,7 +92,7 @@ class CurrencyDisplay extends React.PureComponent {
             autoFocus
             readOnly
             ref={this.baseInputRef}
-            value={currencyValues.base}
+            value={currencyValues.base || currencyValues.target / this.rate}
             onFocus={this.onFocus}
             onChange={this.onChangeValue}
           />
@@ -112,7 +108,7 @@ class CurrencyDisplay extends React.PureComponent {
             name='target'
             readOnly
             ref={this.targetInputRef}
-            value={currencyValues.target}
+            value={currencyValues.target || currencyValues.base * this.rate}
             onFocus={this.onFocus}
             onChange={this.onChangeValue}
           />
