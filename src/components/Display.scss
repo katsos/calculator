@@ -29,3 +29,12 @@
     margin: 0;
   }
 }
+
+@media only screen and (max-width: 520px) {
+  .Display__result {
+    font-size: 9vw;
+  }
+  .Display__expression {
+    font-size: 5.5vw;
+  }
+}
