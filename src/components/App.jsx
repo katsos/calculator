@@ -1,6 +1,7 @@
 import React from 'react';
 import Display from './Display';
 import ButtonPanel from './ButtonPanel';
+import CurrencyDisplay from './CurrencyDisplay';
 import calculateExpression from '../logic/calculate';
 import { BUTTONS_LAYOUT, KEYBOARD_BUTTONS, SEPARATORS } from '../buttons';
 import { getLast, getAllButLast } from '../helpers';
@@ -9,6 +10,7 @@ import './App.scss';
 const INITIAL_STATE = {
   expressionFactors: [],
   result: null,
+  isCurrencyConvOn: false,
 };
 
 const flatButtonsLayout = Object.values(BUTTONS_LAYOUT)
@@ -56,6 +58,8 @@ class App extends React.PureComponent {
         if (this.isLastFactorSeparator) return;
         return this.lastFactor = Number(this.lastFactor) * -1;
       }
+      case '$':
+        return this.setState({ isCurrencyConvOn: true });
       default:
         const expressionFactors = this.getNewExpression(char);
         this.updateDisplay(expressionFactors);
@@ -98,11 +102,13 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { expressionFactors, result } = this.state;
+    const { expressionFactors, result, isCurrencyConvOn } = this.state;
 
     return (
       <div className='App'>
-        <Display {...{ expressionFactors, result }} />
+        {isCurrencyConvOn ? <CurrencyDisplay />
+          : <Display {...{ expressionFactors, result }} />
+        }
         <ButtonPanel onClick={this.handleInput}/>
       </div>
     );
