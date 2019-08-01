@@ -88,7 +88,7 @@ class App extends React.PureComponent {
   }
 
   set lastFactor(value) {
-    return this.updateDisplay([...getAllButLast(this.state.expressionFactors), value]);
+    return this.updateDisplay([...getAllButLast(this.state.expressionFactors), value.toString()]);
   }
 
   updateDisplay(expressionFactors) {
