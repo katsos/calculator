@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { numberWithCommas } from '../helpers';
+import { numberWithCommas } from '../services/helpers';
 import { SEPARATORS } from '../buttons';
 import './Display.scss';
 

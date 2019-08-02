@@ -4,7 +4,7 @@ import ButtonPanel from './ButtonPanel';
 import CurrencyDisplay from './CurrencyDisplay';
 import calculateExpression from '../services/calculate';
 import { KEYBOARD_BUTTONS, SEPARATORS, flatButtonsLayout } from '../buttons';
-import { getLast, getAllButLast } from '../helpers';
+import { getLast, getAllButLast } from '../services/helpers';
 import './App.scss';
 
 const INITIAL_STATE = {
