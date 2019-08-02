@@ -88,7 +88,7 @@ class CurrencyDisplay extends React.PureComponent {
   }
 
   get rate() {
-    const { rates, currencies: { base, target } }= this.state;
+    const { rates, currencies: { target } }= this.state;
     if (!rates) return null;
     return rates[target];
   }
