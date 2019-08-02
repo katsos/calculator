@@ -15,18 +15,24 @@ const BUTTONS = {
 };
 const { TOP, NUMBERS, BOTTOM, SIDE } = BUTTONS;
 
-const ButtonPanel = ({ onClick }) => (
-  <div className='ButtonPanel'>
-    <div className='ButtonPanel__left'>
-      {TOP.map(b => <Button className='Button--dark' key={b} name={b} onClick={() => onClick(b)} />)}
-      {[...NUMBERS, ...BOTTOM].map(b => <Button key={b} name={b} onClick={() => onClick(b)} />)}
-    </div>
-    <div className='ButtonPanel__right'>
-      {SIDE.map(b => <Button key={b} name={b} onClick={() => onClick(b)} />)}
-    </div>
-  </div>
-);
+const ButtonPanel = ({ onClick }) => {
+  function _onClick({ target }) {
+    onClick(target.innerText);
+    setTimeout(() => target.blur(), 40);
+  }
 
+  return (
+    <div className='ButtonPanel'>
+      <div className='ButtonPanel__left'>
+        {TOP.map(b => <Button className='Button--dark' key={b} name={b} onClick={_onClick} />)}
+        {[...NUMBERS, ...BOTTOM].map(b => <Button key={b} name={b} onClick={_onClick} />)}
+      </div>
+      <div className='ButtonPanel__right'>
+        {SIDE.map(b => <Button key={b} name={b} onClick={_onClick} />)}
+      </div>
+    </div>
+  );
+}
 ButtonPanel.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
