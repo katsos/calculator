@@ -53,7 +53,7 @@ class CurrencyDisplay extends React.PureComponent {
       return this.props.onClose(result || 0);
     }
 
-    if (input === 'C') return this.props.onClose();
+    if (['C', '$'].includes(input)) return this.props.onClose();
 
     if (input === 'Backspace') return this.setState({ currencyValues: INITIAL_STATE.currencyValues });
 
