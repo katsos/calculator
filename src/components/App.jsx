@@ -69,6 +69,9 @@ class App extends React.PureComponent {
     }
   }
 
+  onCloseCurrencyDisplay = (result) =>
+    this.setState({ ...INITIAL_STATE, expressionFactors: [result.toString()] })
+
   getNewExpression(char) {
     const { expressionFactors } = this.state;
     const allFactorsButLast = getAllButLast(expressionFactors);
@@ -110,7 +113,8 @@ class App extends React.PureComponent {
     return (
       <div className='App'>
         <div className='App__display'>
-          {isCurrencyConvOn ? <CurrencyDisplay ref={this.currencyDisplayRef}/>
+          {isCurrencyConvOn
+            ? <CurrencyDisplay ref={this.currencyDisplayRef} onClose={this.onCloseCurrencyDisplay} />
             : <Display {...{ expressionFactors, result }} />
           }
         </div>

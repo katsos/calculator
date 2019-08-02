@@ -47,6 +47,16 @@ class CurrencyDisplay extends React.PureComponent {
   }
 
   handleInput = (input) => {
+    if (input === '=') {
+      const { base, target } = this.state.currencyValues;
+      const result = base.length ? base * this.rate : target / this.rate;
+      return this.props.onClose(result || 0);
+    }
+
+    if (input === 'C') return this.props.onClose();
+
+    if (input === 'Backspace') return this.setState({ currencyValues: INITIAL_STATE.currencyValues });
+
     if (!input.match(/\d|\./)) return;
     const { currencyValues } = this.state;
     const inputName = (this.lastFocusedElement === this.targetInputRef.current) ? 'target' : 'base';
