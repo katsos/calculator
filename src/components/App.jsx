@@ -68,7 +68,7 @@ class App extends React.PureComponent {
   }
 
   onCloseCurrencyDisplay = (result = '0') =>
-    this.setState({ ...INITIAL_STATE, expressionFactors: [result.toString()], result })
+    this.setState({ ...INITIAL_STATE }, this.updateDisplay([result.toString()]))
 
   getNewExpression(char) {
     const { expressionFactors } = this.state;
