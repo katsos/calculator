@@ -60,7 +60,9 @@ class CurrencyDisplay extends React.PureComponent {
     if (!input.match(/\d|\./)) return;
     const { currencyValues } = this.state;
     const inputName = (this.lastFocusedElement === this.targetInputRef.current) ? 'target' : 'base';
-    const diff = { [inputName]: `${currencyValues[inputName]}${input}` };
+    const value = `${currencyValues[inputName]}${input}`;
+    if (value > Number.MAX_SAFE_INTEGER) return;
+    const diff = { [inputName]: value };
     return this.setState({ currencyValues: { ...INITIAL_STATE.currencyValues, ...diff } });
   }
 
