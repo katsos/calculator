@@ -4,6 +4,7 @@ import ButtonPanel from './ButtonPanel';
 import CurrencyDisplay from './CurrencyDisplay';
 import calculateExpression from '../services/calculate';
 import { KEYBOARD_BUTTONS, SEPARATORS, flatButtonsLayout } from '../buttons';
+import { getNewExpression } from '../services/calculate';
 import { getLast, getAllButLast } from '../services/helpers';
 import './App.scss';
 
@@ -62,29 +63,13 @@ class App extends React.PureComponent {
       case '$':
         return this.setState({ isCurrencyConvOn: true });
       default:
-        const expressionFactors = this.getNewExpression(char);
-        this.updateDisplay(expressionFactors);
+        const newExpressionFactors = getNewExpression(this.state.expressionFactors, char);
+        this.updateDisplay(newExpressionFactors);
     }
   }
 
   onCloseCurrencyDisplay = (result = '0') =>
     this.setState({ isCurrencyConvOn: false, expressionFactors: [result.toString()], result });
-
-  getNewExpression(char) {
-    const { expressionFactors } = this.state;
-    const allFactorsButLast = getAllButLast(expressionFactors);
-
-    if (SEPARATORS.includes(char)) {
-      if (!expressionFactors.length) return []; // an operator must always come after a number
-      if (this.isLastFactorSeparator) return [...allFactorsButLast, char]; // replace last separator
-      return [...expressionFactors, char]; // add new separator
-    }
-    if (this.isLastFactorSeparator) return [...expressionFactors, char]; // add new number
-
-    const lastFactor = getLast(expressionFactors);
-    if (lastFactor === '0') return [...allFactorsButLast, char]; // replace zero number
-    return [...allFactorsButLast, (lastFactor || '') + char]; // update last number
-  }
 
   get lastFactor() {
     const { expressionFactors } = this.state;
