@@ -2,18 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Button.scss';
 
-const Button = ({ className, name, onClick }) => (
-  <button className={'Button ' + className} onClick={onClick}>{name}</button>
-);
+const Button = ({ name, dark, disabled, onClick }) => {
+  const className = ['Button', dark ? 'Button--dark' : ''].join(' ');
+  return <button {...{ className, name, onClick, disabled }}>{!disabled && name}</button>
+}
 
 Button.propTypes = {
-  className: PropTypes.string,
   name: PropTypes.string.isRequired,
+  dark: PropTypes.bool,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
-  className: '',
+  dark: false,
+  disabled: false,
 };
 
 export default Button;
