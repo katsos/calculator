@@ -8,8 +8,8 @@ import { getLast, getAllButLast } from '../helpers';
 import './App.scss';
 
 const INITIAL_STATE = {
-  expressionFactors: [],
-  result: null,
+  expressionFactors: ['0'],
+  result: 0,
   isCurrencyConvOn: false,
 };
 
@@ -67,8 +67,8 @@ class App extends React.PureComponent {
     }
   }
 
-  onCloseCurrencyDisplay = (result) =>
-    this.setState({ ...INITIAL_STATE, expressionFactors: [result.toString()] })
+  onCloseCurrencyDisplay = (result = '0') =>
+    this.setState({ ...INITIAL_STATE, expressionFactors: [result.toString()], result })
 
   getNewExpression(char) {
     const { expressionFactors } = this.state;
