@@ -75,9 +75,6 @@ class CurrencyDisplay extends React.PureComponent {
   onChangeTarget = ({ target: { value }}) =>
     this.setState({ currencies: { ...this.state.currencies, target: value }})
 
-  onChangeValue = ({ target: { name, value } }) =>
-    this.setState({ currencyValues: { ...INITIAL_STATE.currencyValues, [name]: value } })
-
   onFocus = ({ target }) => this.lastFocusedElement = target;
 
   async fetchRates() {
@@ -111,7 +108,6 @@ class CurrencyDisplay extends React.PureComponent {
             ref={this.baseInputRef}
             value={baseValue}
             onFocus={this.onFocus}
-            onChange={this.onChangeValue}
           />
         </div>
         <p className='CurrencyDisplay__rate'>Rate: {this.rate}</p>
@@ -127,7 +123,6 @@ class CurrencyDisplay extends React.PureComponent {
             ref={this.targetInputRef}
             value={targetValue}
             onFocus={this.onFocus}
-            onChange={this.onChangeValue}
           />
         </div>
 
