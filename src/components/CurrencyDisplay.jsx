@@ -64,8 +64,13 @@ class CurrencyDisplay extends React.PureComponent {
     return this.setState({ currencyValues: { ...INITIAL_STATE.currencyValues, ...diff } });
   }
 
-  onChangeBase = ({ target: { value }}) =>
-    this.setState({ currencies: { ...this.state.currencies, base: value }}, this.fetchRates)
+  onChangeBase = ({ target: { value }}) => {
+    const { currencies: { base, target } } = this.state;
+    this.setState({ currencies: {
+       base: value,
+       target: (value === target) ? base : target,
+    }}, this.fetchRates)
+  }
 
   onChangeTarget = ({ target: { value }}) =>
     this.setState({ currencies: { ...this.state.currencies, target: value }})
