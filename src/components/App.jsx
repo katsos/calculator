@@ -2,7 +2,7 @@ import React from 'react';
 import Display from './Display';
 import ButtonPanel from './ButtonPanel';
 import CurrencyDisplay from './CurrencyDisplay';
-import calculateExpression from '../logic/calculate';
+import calculateExpression from '../services/calculate';
 import { KEYBOARD_BUTTONS, SEPARATORS, flatButtonsLayout } from '../buttons';
 import { getLast, getAllButLast } from '../helpers';
 import './App.scss';
